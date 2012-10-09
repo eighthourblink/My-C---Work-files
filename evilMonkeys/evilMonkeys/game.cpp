@@ -12,19 +12,29 @@ using namespace std;
 
 bool Game::run(void)
 {
+	drawArea.createSprite(0, '$');
+	
+	
 	char key = ' ';
 	
 	startTime = timeGetTime();
 	frameCount = 0;
 	lastTime = 0;
 
+	posx = 0; 
+
 	while (key != 'q')
 	{
 		while (!getInput(&key))
 		{
+			timerUpdate();
+			
 		}
 
-		cout << "The key you have pressed is : " << key << endl;
+		
+		
+
+		
 	}
 
 	cout << frameCount / ((timeGetTime() - startTime) / 1000)  << " frames per second" << endl;
@@ -50,6 +60,11 @@ void Game::timerUpdate(void)
 
 	if (currentTime < GAME_SPEED)
 		return;
+
+	drawArea.eraseSprite(posx, 5);
+	posx = (posx + 1) % 80;
+	drawArea.drawSprite(0, posx, 5);
+
 	frameCount++;
 
 	lastTime = timeGetTime();
